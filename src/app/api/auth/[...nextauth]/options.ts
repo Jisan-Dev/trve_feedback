@@ -4,11 +4,6 @@ import { compare } from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 
-type CredentialsTypes = {
-  email: { label: string; type: string };
-  password: { label: string; type: string };
-};
-
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -46,4 +41,26 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token._id = user?._id;
+        token.isVerified = user.isVerified;
+        token.isAcceptingMessages = user.isAcceptingMessages;
+        token.username = user.username;
+      }
+      return token;
+    },
+    async session({ session, token, user }) {
+      if (token) {
+        session.user._id = token._id;
+        session.user.isVerified = token.isVerified;
+        session.user.isAcceptingMessages = token.isAcceptingMessages;
+        session.user.username = token.username;
+      }
+      return session;
+    },
+  },
+  session: { strategy: "jwt", maxAge: 24 * 60 * 60 },
+  secret: process.env.NEXTAUTH_SECRET,
 };

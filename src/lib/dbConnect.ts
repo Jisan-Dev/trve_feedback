@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { ConnectOptions } from "mongoose";
 
 type connectionObject = {
   isConnected?: number;
@@ -12,8 +12,12 @@ async function dbConnect(): Promise<void> {
     return;
   }
 
+  const options: ConnectOptions = {
+    dbName: "TrveFeedbackDB",
+  };
+
   try {
-    const db = await mongoose.connect(process.env.MONGO_URI || "", {});
+    const db = await mongoose.connect(process.env.MONGO_URI || "", options);
 
     console.log("firstDB", db);
 
