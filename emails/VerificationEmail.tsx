@@ -7,6 +7,7 @@ import {
   Row,
   Section,
   Text,
+  Button,
   // Button,
 } from "@react-email/components";
 
@@ -45,14 +46,11 @@ export default function VerificationEmail({ username, otp }: VerificationEmailPr
         <Row>
           <Text>If you did not request this code, please ignore this email.</Text>
         </Row>
-        {/* <Row>
-          <Button
-            href={`http://localhost:3000/verify/${username}`}
-            style={{ color: '#61dafb' }}
-          >
+        <Row>
+          <Button href={`http://localhost:3000/verify/${username}`} style={{ color: "#61dafb" }}>
             Verify here
           </Button>
-        </Row> */}
+        </Row>
       </Section>
     </Html>
   );

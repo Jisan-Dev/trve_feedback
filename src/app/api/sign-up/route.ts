@@ -58,7 +58,8 @@ export async function POST(request: Request) {
       await newUser.save();
     }
 
-    const emailResponse = await sendVerificationEmail(email, username, verifyCode);
+    const subject = "Verification Code from TrveFeedback";
+    const emailResponse = await sendVerificationEmail(email, username, verifyCode, subject);
     console.log("emailRes=> ", emailResponse);
 
     if (!emailResponse.success) {
