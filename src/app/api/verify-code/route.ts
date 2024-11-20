@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       await user.save();
       return Response.json({ success: true, message: "Account Verified Successfully" }, { status: 200 });
     } else if (isCodeExpired) {
-      return Response.json({ success: false, message: "Verification code has expired" }, { status: 400 });
+      return Response.json({ success: false, message: "Verification code has expired! Please signup again to get a new code" }, { status: 400 });
     } else {
       return Response.json({ success: false, message: "Invalid verification code" }, { status: 400 });
     }
