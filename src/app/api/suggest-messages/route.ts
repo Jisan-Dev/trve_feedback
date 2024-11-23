@@ -34,7 +34,8 @@ export async function POST() {
 
     const result = await chatSession.sendMessage(prompt);
     // console.log(result.response.text());
-    return result.response.text();
+    const generatedMessage = result.response.text();
+    return Response.json({ success: true, message: generatedMessage });
   } catch (error) {
     console.log("Error occurred in generating Ai response ", error);
     // return response to client
