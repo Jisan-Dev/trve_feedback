@@ -21,7 +21,7 @@ export async function GET(request: Request) {
       return Response.json(
         {
           success: false,
-          message: usernameErrors?.length > 0 ? usernameErrors.join(", ") : "invalid query parameters",
+          message: usernameErrors?.length > 0 ? usernameErrors.join(", ") : "invalid query parameters.",
         },
         { status: 400 }
       );
@@ -29,13 +29,14 @@ export async function GET(request: Request) {
 
     const { username } = result?.data;
 
-    const existingVerifiedUser = await UserModel.findOne({ username, isVerified: true });
+    // with case-insensitive enabled
+    const existingVerifiedUser = await UserModel.findOne({ username: { $regex: new RegExp(`^${username}$`, "i") }, isVerified: true });
 
     if (existingVerifiedUser) {
       return Response.json(
         {
           success: false,
-          message: "Username already taken and verified",
+          message: "Username already taken and verified.",
         },
         { status: 400 }
       );
@@ -50,6 +51,6 @@ export async function GET(request: Request) {
     );
   } catch (error) {
     console.log("error checking username ", error);
-    return Response.json({ success: false, message: "An error occurred while checking username" }, { status: 500 });
+    return Response.json({ success: false, message: "An error occurred while checking username." }, { status: 500 });
   }
 }
