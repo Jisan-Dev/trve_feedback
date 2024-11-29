@@ -100,6 +100,9 @@ const page = () => {
                       {...field}
                       onChange={(e) => {
                         field.onChange(e);
+                        if (!e.target.value) {
+                          setUsernameMessage("Type your username");
+                        }
                         debounced(e.target.value);
                       }}
                     />
@@ -139,21 +142,23 @@ const page = () => {
               )}
             />
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? (
+              {}
+              {isCheckingUsername ? (
+                <span className="ml-2 text-sm text-gray-400">Checking username...</span>
+              ) : isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
                 </>
               ) : (
                 "Sign Up"
               )}
-              {isCheckingUsername && <span className="ml-2 text-sm text-gray-400">Checking username...</span>}
             </Button>
           </form>
         </Form>
         <div className="text-center mt-4">
           <p>
             Already a member?{" "}
-            <Link href="/sign-in" className="text-blue-600 hover:text-blue-800">
+            <Link href="/api/auth/signin" className="text-blue-600 hover:text-blue-800">
               Sign in
             </Link>
           </p>
