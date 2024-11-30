@@ -15,10 +15,10 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials: any): Promise<any> {
         dbConnect();
         try {
-          const user = await UserModel.findOne({ $or: [{ email: credentials?.email }, { username: credentials?.username }] });
+          const user = await UserModel.findOne({ $or: [{ email: credentials?.identifier }, { username: credentials?.identifier }] });
 
           if (!user) {
-            throw new Error("No user found with this email");
+            throw new Error("No user found with this credentials");
           }
 
           if (!user.isVerified) {
@@ -30,13 +30,13 @@ export const authOptions: NextAuthOptions = {
             throw new Error("Invalid Credentials");
           }
           return user;
-        } catch (error) {
+        } catch (error: any) {
           // If you return null then an error will be displayed advising the user to check their details.
           // return null
 
           // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
           console.log(error);
-          throw new Error("Invalid Credentials");
+          throw new Error(error?.message);
         }
       },
     }),
@@ -63,4 +63,5 @@ export const authOptions: NextAuthOptions = {
   },
   session: { strategy: "jwt", maxAge: 24 * 60 * 60 },
   secret: process.env.NEXTAUTH_SECRET,
+  pages: { signIn: "/sign-in" },
 };
