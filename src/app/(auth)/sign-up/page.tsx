@@ -142,7 +142,6 @@ const page = () => {
               )}
             />
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {}
               {isCheckingUsername ? (
                 <span className="ml-2 text-sm text-gray-400">Checking username...</span>
               ) : isSubmitting ? (
