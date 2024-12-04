@@ -1,5 +1,5 @@
 "use client";
-// import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import Link from "next/link";
@@ -8,10 +8,16 @@ import { Mail } from "lucide-react"; // Assuming you have an icon for messages
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Autoplay from "embla-carousel-autoplay";
 import messages from "@/messages.json";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   //getSession
-  // const session = useSession();
+  const session = useSession();
+  const router = useRouter();
+  if (session && session?.data?.user) {
+    router.push("/dashboard");
+    return;
+  }
   // console.log(session);
 
   // Check if user is authenticated

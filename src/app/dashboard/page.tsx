@@ -11,17 +11,18 @@ import { ApiResponse } from "@/types/ApiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
 import { Loader2, RefreshCcw } from "lucide-react";
-import { User } from "next-auth";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { Key, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Dashboard() {
+  const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
   const { toast } = useToast();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const handleDeleteMessage = (messageId: string) => {
     setMessages(messages.filter((message) => message._id !== messageId));
@@ -104,7 +105,10 @@ export default function Dashboard() {
     toast({ title: "URL Copied", description: "Profile URL has been copied to clipboard." });
   };
 
-  if (!session || !session?.user) return <div className="text-center">Please Login</div>;
+  if (status == "loading") return <div className="text-center">Loading session...</div>;
+  if (!session || !session?.user) {
+    router.replace("/sign-in");
+  }
 
   return (
     <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
