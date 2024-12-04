@@ -73,10 +73,10 @@ export default function Dashboard() {
   );
 
   useEffect(() => {
-    if (!session || !session?.user) return;
+    // if (!session || !session?.user) return;
     fetchMessages();
     fetchAcceptMessages();
-  }, [session, setValue, fetchAcceptMessages, fetchMessages]);
+  }, [session, setValue]);
 
   // handle switch change
   const handleSwitchChange = async () => {
@@ -94,10 +94,10 @@ export default function Dashboard() {
     }
   };
 
-  const { username } = session?.user as User;
+  // const { username } = session?.user as User;
   // do more research on how to get user's current location
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
-  const profileUrl = `${baseUrl}/u/${username}`;
+  const profileUrl = `${baseUrl}/u/${session?.user.username}`;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl);
@@ -135,7 +135,7 @@ export default function Dashboard() {
       </Button>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
         {messages.length > 0 ? (
-          messages.map((message, index) => <MessageCard key={message._id as Key} message={message} onMessageDelete={handleDeleteMessage} />)
+          messages.map((message, index) => <MessageCard key={index} message={message} onMessageDelete={handleDeleteMessage} />)
         ) : (
           <p>No messages to display.</p>
         )}
