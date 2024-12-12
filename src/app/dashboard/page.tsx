@@ -74,7 +74,7 @@ export default function Dashboard() {
   );
 
   useEffect(() => {
-    // if (!session || !session?.user) return;
+    if (!session || !session?.user) return;
     fetchMessages();
     fetchAcceptMessages();
   }, [session, setValue]);
@@ -108,6 +108,7 @@ export default function Dashboard() {
   if (status == "loading") return <div className="text-center">Loading session...</div>;
   if (!session || !session?.user) {
     router.replace("/sign-in");
+    return;
   }
 
   return (

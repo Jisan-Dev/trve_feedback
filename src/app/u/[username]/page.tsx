@@ -10,7 +10,7 @@ import { messageSchema } from "@/schemas/messageSchema";
 import { ApiResponse } from "@/types/ApiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
-import { Loader2 } from "lucide-react";
+import { Loader2, LoaderPinwheel } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -67,7 +67,7 @@ export default function SendMessage() {
 
   return (
     <div className="container mx-auto my-8 p-6 bg-white rounded max-w-4xl">
-      <h1 className="text-4xl font-bold mb-6 text-center">Public Profile Link</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">Send Anonymous Message</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -109,13 +109,19 @@ export default function SendMessage() {
           <CardHeader>
             <h3 className="text-xl font-semibold">Messages</h3>
           </CardHeader>
-          <CardContent className="flex flex-col space-y-4">
-            {parseStringMessages(generatedMsg).map((message, index) => (
-              <Button key={index} variant="outline" className="mb-2" onClick={() => handleMessageClick(message)}>
-                {message}
-              </Button>
-            ))}
-          </CardContent>
+          {isSuggestLoading ? (
+            <div className="w-full h-full flex items-center justify-center mb-2">
+              <LoaderPinwheel className="animate-spin" />
+            </div>
+          ) : (
+            <CardContent className="flex flex-col space-y-4">
+              {parseStringMessages(generatedMsg).map((message, index) => (
+                <Button key={index} variant="outline" className="mb-2" onClick={() => handleMessageClick(message)}>
+                  {message}
+                </Button>
+              ))}
+            </CardContent>
+          )}
         </Card>
       </div>
       <Separator className="my-6" />

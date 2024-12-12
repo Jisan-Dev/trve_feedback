@@ -33,7 +33,7 @@ export async function POST() {
     });
 
     const result = await chatSession.sendMessage(prompt);
-    // console.log(result.response.text());
+    console.log(result.response.text());
     const generatedMessage = result.response.text();
     return Response.json({ success: true, message: generatedMessage });
   } catch (error) {
