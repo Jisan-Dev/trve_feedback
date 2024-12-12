@@ -30,13 +30,13 @@ export const authOptions: NextAuthOptions = {
             throw new Error("Invalid Credentials");
           }
           return user;
-        } catch (error: any) {
+        } catch (error) {
           // If you return null then an error will be displayed advising the user to check their details.
           // return null
 
           // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
           console.log(error);
-          throw new Error(error?.message);
+          if (error instanceof Error) throw new Error(error?.message);
         }
       },
     }),
