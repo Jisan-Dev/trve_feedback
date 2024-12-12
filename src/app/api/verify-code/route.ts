@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     if (isCodeMatched || !isCodeExpired) {
       user.isVerified = true;
       await user.save();
-      return Response.json({ success: true, message: "Account Verified Successfully" }, { status: 200 });
+      return Response.json({ success: true, message: "Account Verified Successfully! Please Login" }, { status: 200 });
     } else if (isCodeExpired) {
       return Response.json({ success: false, message: "Verification code has expired! Please signup again to get a new code" }, { status: 400 });
     } else {

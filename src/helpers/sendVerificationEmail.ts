@@ -54,7 +54,7 @@ export async function sendVerificationEmail(email: string, username: string, ver
             You can click the button below to verify your account after copying the code:
         </p>
         <div style="text-align: center; margin: 20px 0;">
-            <a href="http://localhost:3000/verify/${username}/${verifyCode}" 
+            <a href="https://trve-feedback.vercel.app/verify/${username}/${verifyCode}" 
                style="text-decoration: none; background-color: #007bff; color: #ffffff; font-size: 16px; font-weight: bold; padding: 12px 24px; border-radius: 8px; display: inline-block;">
                 Verify Here
             </a>
