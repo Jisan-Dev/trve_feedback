@@ -98,7 +98,7 @@ export default function Dashboard() {
   // const { username } = session?.user as User;
   // do more research on how to get user's current location
   // const baseUrl = `${window.location.protocol}//${window.location.host}`;
-  const profileUrl = `$http://localhost:3000/u/${session?.user.username}`;
+  const profileUrl = `https://trve-feedback.vercel.app/u/${session?.user.username}`;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl);
