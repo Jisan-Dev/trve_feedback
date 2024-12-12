@@ -11,15 +11,15 @@ export default function Navbar() {
 
   return (
     <nav className="p-4 md:p-6 shadow-md">
-      <div className="container mx-auto flex md:flex-row justify-between items-center">
-        <Link href="/" className="text-xl font-bold mb-4 md:mb-0 text-foreground/90">
+      <div className="container mx-auto flex justify-between items-center">
+        <Link href="/" className="text-xl font-bold text-foreground/90">
           Mystery Message
         </Link>
 
         {session && user ? (
           <>
-            <span className="mr-4">Welcome {user.username || user.email}</span>
-            <Button onClick={() => signOut({ redirect: false })} className="w-full md:w-auto bg-slate-100 text-black" variant="outline">
+            <span className="mr-4 max-sm:mr-11 w-36">Welcome {user.username || user.email}</span>
+            <Button onClick={() => signOut({ redirect: false })} className=" bg-slate-100 text-black" variant="outline">
               Logout
             </Button>
           </>
