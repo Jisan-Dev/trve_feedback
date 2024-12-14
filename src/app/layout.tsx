@@ -34,7 +34,7 @@ export default function RootLayout({
           {children}
           <Toaster />
           {/* Footer */}
-          <footer className="text-center p-4 md:p-6 bg-background text-foreground/70 border-t">© 2024 True Feedback. All rights reserved.</footer>
+          <footer className="text-center max-sm:text-sm p-4 md:p-6 bg-background text-foreground/70 border-t">© 2024 True Feedback. All rights reserved.</footer>
         </body>
       </AuthProvider>
     </html>

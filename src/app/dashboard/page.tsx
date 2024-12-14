@@ -112,7 +112,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="my-8 p-6 bg-background container mx-auto ">
+    <div className="my-8 p-6 bg-background container mx-auto min-h-[calc(100vh-205px)]">
       <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
 
       <div className="mb-4">
