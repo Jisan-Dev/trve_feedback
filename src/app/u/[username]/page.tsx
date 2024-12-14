@@ -66,7 +66,7 @@ export default function SendMessage() {
   };
 
   return (
-    <div className="container mx-auto my-8 p-3 bg-white rounded max-w-4xl">
+    <div className="container mx-auto my-8 p-3 bg-background rounded max-w-4xl">
       <h1 className="text-4xl font-bold mb-6 text-center">
         Send Anonymous Message to <br /> @{username}
       </h1>
@@ -120,7 +120,7 @@ export default function SendMessage() {
               {parseStringMessages(generatedMsg).map((message, index) => (
                 <p
                   key={index}
-                  className="mb-2 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground px-4 py-2 text-center"
+                  className="mb-2 border cursor-pointer rounded-lg border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground px-4 py-2 text-center"
                   onClick={() => handleMessageClick(message)}>
                   {message}
                 </p>
@@ -129,7 +129,7 @@ export default function SendMessage() {
           )}
         </Card>
       </div>
-      <Separator className="my-6" />
+      <Separator className="my-8 mt-14" />
       <div className="text-center">
         <div className="mb-4">Get Your Message Board</div>
         <Link href={"/sign-up"}>

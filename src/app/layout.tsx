@@ -29,10 +29,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
-        <body className={`font-lexend antialiased`}>
+        <body className={`font-lexend antialiased dark`}>
           <Navbar />
           {children}
           <Toaster />
+          {/* Footer */}
+          <footer className="text-center p-4 md:p-6 bg-background text-foreground/70 border-t">© 2024 True Feedback. All rights reserved.</footer>
         </body>
       </AuthProvider>
     </html>
