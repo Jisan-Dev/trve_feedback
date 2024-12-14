@@ -66,8 +66,10 @@ export default function SendMessage() {
   };
 
   return (
-    <div className="container mx-auto my-8 p-6 bg-white rounded max-w-4xl">
-      <h1 className="text-4xl font-bold mb-6 text-center">Send Anonymous Message</h1>
+    <div className="container mx-auto my-8 p-3 bg-white rounded max-w-4xl">
+      <h1 className="text-4xl font-bold mb-6 text-center">
+        Send Anonymous Message to <br /> @{username}
+      </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -75,7 +77,7 @@ export default function SendMessage() {
             name="content"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Send Anonymous Message to @{username}</FormLabel>
+                <FormLabel>Write Message:</FormLabel>
                 <FormControl>
                   <Textarea placeholder="Write your anonymous message here" className="resize-none" {...field} />
                 </FormControl>
@@ -91,7 +93,7 @@ export default function SendMessage() {
               </Button>
             ) : (
               <Button type="submit" disabled={isLoading || !messageContent}>
-                Send It
+                SEND IT !
               </Button>
             )}
           </div>
@@ -116,9 +118,12 @@ export default function SendMessage() {
           ) : (
             <CardContent className="flex flex-col space-y-4">
               {parseStringMessages(generatedMsg).map((message, index) => (
-                <Button key={index} variant="outline" className="mb-2" onClick={() => handleMessageClick(message)}>
+                <p
+                  key={index}
+                  className="mb-2 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground px-4 py-2 text-center"
+                  onClick={() => handleMessageClick(message)}>
                   {message}
-                </Button>
+                </p>
               ))}
             </CardContent>
           )}
