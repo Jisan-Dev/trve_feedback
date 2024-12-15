@@ -10,7 +10,7 @@ import { acceptMessagesSchema } from "@/schemas/acceptMessagesSchema";
 import { ApiResponse } from "@/types/ApiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
-import { Loader2, RefreshCcw } from "lucide-react";
+import { Loader2, LoaderPinwheel, RefreshCcw } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Key, useCallback, useEffect, useState } from "react";
@@ -105,25 +105,30 @@ export default function Dashboard() {
     toast({ title: "URL Copied", description: "Profile URL has been copied to clipboard." });
   };
 
-  if (status == "loading") return <div className="text-center">Loading session...</div>;
+  if (status == "loading")
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoaderPinwheel className="h-16 w-16 animate-spin -mt-16" />
+      </div>
+    );
   if (!session || !session?.user) {
     router.replace("/sign-in");
     return;
   }
 
   return (
-    <div className="my-8 p-6 bg-background container mx-auto min-h-[calc(100vh-205px)]">
+    <div className="my-8 p-6 container mx-auto min-h-[calc(100vh-205px)]">
       <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
 
       <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-2">Copy Your Unique Link</h2>{" "}
+        <h2 className="text-base font-semibold mb-3">Copy Your Unique Link</h2>{" "}
         <div className="flex items-center">
           <input type="text" value={profileUrl} disabled className="input input-bordered w-full p-2 sm:pl-4 mr-2 rounded-lg" />
           <Button onClick={copyToClipboard}>Copy</Button>
         </div>
       </div>
 
-      <div className="mb-4">
+      <div className="mb-4 flex items-center">
         <Switch {...register("acceptMessages")} checked={acceptMessages} onCheckedChange={handleSwitchChange} disabled={isSwitchLoading} />
         <span className="ml-2">Accept Messages: {acceptMessages ? "On" : "Off"}</span>
       </div>

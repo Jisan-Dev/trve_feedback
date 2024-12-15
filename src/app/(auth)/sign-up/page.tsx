@@ -80,10 +80,10 @@ const page = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[calc(100vh-165px)] max-sm:px-3 max-sm:my-3 bg-background text-foreground">
-      <div className="w-full max-w-md p-8 space-y-8 bg-background rounded-lg shadow-md shadow-neutral-800 border">
+    <div className="flex justify-center items-center min-h-[calc(100vh-165px)] max-sm:px-3 max-sm:my-3 text-foreground">
+      <div className="w-full max-w-md p-8 space-y-8 rounded-lg shadow-md sm:my-6 shadow-neutral-800 border">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">Join True Feedback</h1>
+          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-3 md:mb-6">Join True Feedback</h1>
           <p className="mb-4">Sign up to start your anonymous adventure</p>
         </div>
         <Form {...form}>
