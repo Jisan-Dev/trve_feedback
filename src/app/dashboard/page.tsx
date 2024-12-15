@@ -13,8 +13,9 @@ import axios, { AxiosError } from "axios";
 import { Loader2, LoaderPinwheel, RefreshCcw } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Key, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import Loading from "../loading";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -108,7 +109,8 @@ export default function Dashboard() {
   if (status == "loading")
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <LoaderPinwheel className="h-16 w-16 animate-spin -mt-16" />
+        {/* <LoaderPinwheel className="h-16 w-16 animate-spin -mt-16" /> */}
+        <Loading />
       </div>
     );
   if (!session || !session?.user) {

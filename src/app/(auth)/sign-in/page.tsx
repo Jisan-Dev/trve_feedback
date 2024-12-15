@@ -47,7 +47,7 @@ export default function SignInForm() {
 
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-165px)] max-sm:px-3 max-sm:my-3 text-foreground">
-      <div className="w-full max-w-md p-8 space-y-8 rounded-lg shadow-md shadow-neutral-800 border sm:my-6">
+      <div className="w-full max-w-md p-8 space-y-8 rounded-lg shadow-md shadow-slate-900 border sm:my-6">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-3 md:mb-6">Welcome Back to True Feedback</h1>
           <p className="mb-4">Sign in to continue your secret conversations</p>

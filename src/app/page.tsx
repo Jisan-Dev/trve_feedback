@@ -1,55 +1,31 @@
 "use client";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react"; // Assuming you have an icon for messages
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Autoplay from "embla-carousel-autoplay";
 import messages from "@/messages.json";
 import { useRouter } from "next/navigation";
+import Loading from "./loading";
 
 export default function Home() {
   //getSession
   const session = useSession();
   const router = useRouter();
+
+  if (session?.status == "loading") {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loading />
+      </div>
+    );
+  }
+
   if (session && session?.data?.user) {
     router.push("/dashboard");
     return;
   }
-  // console.log(session);
 
-  // Check if user is authenticated
-  // if (!session) {
-  //   return (
-  //     <div className="text-center">
-  //       <p>You need to be logged in to access this page.</p>
-  //       <Link href="/api/auth/signin">
-  //         <a className="inline-flex items-center gap-2 text-sm font-semibold text-foreground hover:text-background transition-colors">
-  //           Sign in
-  //         </a>
-  //       </Link>
-  //     </div>
-  //   );
-  // }
-
-  // If user is authenticated, display their username
-  // return (
-  //   <div className="flex gap-4 items-center flex-col sm:flex-row">
-  //     <Image
-  //       className="dark:invert"
-  //       src="/next.svg"
-  //       alt="Next.js logo"
-  //       width={180}
-  //       height={38}
-  //       priority
-  //     />
-  //     <h1 className="text-4xl font-semibold text-foreground dark:text-background">
-  //       Welcome, {session.user.username}!
-  //     </h1>
-  //   </div>
-  // );
   return (
     <>
       {/* Main content */}
