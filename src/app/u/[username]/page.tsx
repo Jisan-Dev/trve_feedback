@@ -55,7 +55,8 @@ export default function SendMessage() {
       setGeneratedMsg(response.data?.message);
     } catch (error) {
       console.error("Error fetching messages:", error);
-      // Handle error appropriately
+      const axiosError = error as AxiosError<ApiResponse>;
+      toast({ title: "Error", description: axiosError.response?.data?.message || "Something went wrong!", variant: "destructive" });
     } finally {
       setIsSuggestLoading(false);
     }
