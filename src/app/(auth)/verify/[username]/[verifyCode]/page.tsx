@@ -36,8 +36,7 @@ function Verify() {
       console.log("[RESPONSE](/api/verify-code)=> ", response);
       if (response?.data?.success) {
         toast({ title: "Success", description: response.data.message });
-        // router.push("sign-in");
-        redirect(`/sign-in`);
+        router.push("/sign-in");
       } else {
         toast({ title: "Error", description: "Something went wrong" });
       }
