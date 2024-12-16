@@ -37,7 +37,7 @@ function Verify() {
       if (response?.data?.success) {
         toast({ title: "Success", description: response.data.message });
         // router.push("sign-in");
-        redirect(`${process.env.BASE_URL}/sign-in`);
+        redirect(`/sign-in`);
       } else {
         toast({ title: "Error", description: "Something went wrong" });
       }
