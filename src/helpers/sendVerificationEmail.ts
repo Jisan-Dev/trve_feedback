@@ -1,35 +1,40 @@
 import { ApiResponse } from "@/types/ApiResponse";
-import nodemailer from "nodemailer";
+// import nodemailer from "nodemailer";
+import sgMail from "@sendgrid/mail";
+sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 export async function sendVerificationEmail(email: string, username: string, verifyCode: string, subject: string): Promise<ApiResponse> {
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false, // Use `true` for port 465, `false` for all other ports
-      auth: {
-        user: process.env.TRANSPORTER_EMAIL,
-        pass: process.env.TRANSPORTER_PASS,
-      },
-    });
+    // const transporter = nodemailer.createTransport({
+    //   service: "gmail",
+    //   host: "smtp.gmail.com",
+    //   port: 587,
+    //   secure: false, // Use `true` for port 465, `false` for all other ports
+    //   auth: {
+    //     user: process.env.TRANSPORTER_EMAIL,
+    //     pass: process.env.TRANSPORTER_PASS,
+    //   },
+    // });
 
     // verify transporter
     // verify connection configuration
-    transporter.verify(function (error, success) {
-      if (error) {
-        console.log("error from verify email transporter => ", error);
-        return { success: false, message: "Failed to send verification email" };
-      } else {
-        console.log("Server is ready to take our messages");
-      }
-    });
+    // transporter.verify(function (error, success) {
+    //   if (error) {
+    //     console.log("error from verify email transporter => ", error);
+    //     return { success: false, message: "Failed to send verification email" };
+    //   } else {
+    //     console.log("Server is ready to take our messages");
+    //   }
+    // });
 
     const mailBody = {
-      from: `"TrveFeedback" <${process.env.TRANSPORTER_EMAIL}>`, // sender address
-      to: email, // list of receivers
-      subject: subject, // Subject line
-      // html: `<h1> Verification Code for ${username} is ${verifyCode} </h1>`, // html body
+      to: email, // receiver or list of [receivers]
+      from: {
+        name: "TRVE FEEDBACK",
+        email: "istiakkashem35@gmail.com",
+      }, // sender address
+      subject: subject,
+      text: `Verification Code for ${username} is ${verifyCode}`,
       html: `
       <!DOCTYPE html>
       <html>
@@ -77,14 +82,20 @@ export async function sendVerificationEmail(email: string, username: string, ver
     };
 
     // send mail with defined transport object
-    transporter.sendMail(mailBody, (error, info) => {
-      if (error) {
-        console.log(error);
-        return { success: false, message: "Failed to send verification email" };
-      } else {
-        console.log("email sent: " + info.response);
-      }
-    });
+    // transporter.sendMail(mailBody, (error, info) => {
+    //   if (error) {
+    //     console.log(error);
+    //     return { success: false, message: "Failed to send verification email" };
+    //   } else {
+    //     console.log("email sent: " + info.response);
+    //   }
+    // });
+
+    sgMail
+      .send(mailBody)
+      .then((res) => console.log("email sent. res=> ", res))
+      .catch((error) => console.log("error sending email ", error));
+
     return { success: true, message: "Verification email sent successfully" };
   } catch (emailError) {
     console.error("error sending verification email", emailError);
