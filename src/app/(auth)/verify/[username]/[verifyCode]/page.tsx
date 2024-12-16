@@ -8,7 +8,7 @@ import { ApiResponse } from "@/types/ApiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
 import { Loader2 } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+import { redirect, useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -36,7 +36,8 @@ function Verify() {
       console.log("[RESPONSE](/api/verify-code)=> ", response);
       if (response?.data?.success) {
         toast({ title: "Success", description: response.data.message });
-        router.push("sign-in");
+        // router.push("sign-in");
+        redirect(`${process.env.BASE_URL}/sign-in`);
       } else {
         toast({ title: "Error", description: "Something went wrong" });
       }
