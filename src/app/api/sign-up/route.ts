@@ -36,7 +36,7 @@ export async function POST(request: Request) {
         const hashedPass = await hash(password, 10);
         existingUserByEmail.password = hashedPass;
         existingUserByEmail.verifyCode = verifyCode;
-        existingUserByEmail.verifyCodeExpiry = new Date(Date.now() + 3600000);
+        existingUserByEmail.verifyCodeExpiry = new Date(Date.now() + 3600000); //same as getHours() + 1
         await existingUserByEmail.save();
       }
     } else {
