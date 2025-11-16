@@ -1,38 +1,40 @@
 import { ApiResponse } from "@/types/ApiResponse";
-// import nodemailer from "nodemailer";
-import sgMail from "@sendgrid/mail";
-sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
+import nodemailer from "nodemailer";
+// import sgMail from "@sendgrid/mail";
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
-export async function sendVerificationEmail(email: string, username: string, verifyCode: string, subject: string): Promise<ApiResponse> {
+export async function sendVerificationEmail(
+  email: string,
+  username: string,
+  verifyCode: string,
+  subject: string
+): Promise<ApiResponse> {
   try {
-    // const transporter = nodemailer.createTransport({
-    //   service: "gmail",
-    //   host: "smtp.gmail.com",
-    //   port: 587,
-    //   secure: false, // Use `true` for port 465, `false` for all other ports
-    //   auth: {
-    //     user: process.env.TRANSPORTER_EMAIL,
-    //     pass: process.env.TRANSPORTER_PASS,
-    //   },
-    // });
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.TRANSPORTER_EMAIL,
+        pass: process.env.TRANSPORTER_PASS,
+      },
+    });
 
     // verify transporter
     // verify connection configuration
-    // transporter.verify(function (error, success) {
-    //   if (error) {
-    //     console.log("error from verify email transporter => ", error);
-    //     return { success: false, message: "Failed to send verification email" };
-    //   } else {
-    //     console.log("Server is ready to take our messages");
-    //   }
-    // });
+    transporter.verify(function (error, success) {
+      if (error) {
+        console.log("error from verify email transporter => ", error);
+        return { success: false, message: "Failed to send verification email" };
+      } else {
+        console.log("Server is ready to take our messages");
+      }
+    });
 
     const mailBody = {
       to: email, // receiver or list of [receivers]
       from: {
-        name: "TRVE FEEDBACK",
-        email: "istiakkashem35@gmail.com",
-      }, // sender address
+        name: "Trve Feedback",
+        address: process.env.TRANSPORTER_EMAIL as string,
+      },
       subject: subject,
       text: `Verification Code for ${username} is ${verifyCode}`,
       html: `
@@ -56,7 +58,7 @@ export async function sendVerificationEmail(email: string, username: string, ver
                   </span>
               </div>
               <p style="color: #555555; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">
-                  You can click the button below to verify your account after copying the code:
+                  You can click the button below to verify your account:
               </p>
               <div style="text-align: center; margin: 20px 0;">
                   <a href="https://trve-feedback.vercel.app/verify/${username}/${verifyCode}"
@@ -82,19 +84,19 @@ export async function sendVerificationEmail(email: string, username: string, ver
     };
 
     // send mail with defined transport object
-    // transporter.sendMail(mailBody, (error, info) => {
-    //   if (error) {
-    //     console.log(error);
-    //     return { success: false, message: "Failed to send verification email" };
-    //   } else {
-    //     console.log("email sent: " + info.response);
-    //   }
-    // });
+    transporter.sendMail(mailBody, (error, info) => {
+      if (error) {
+        console.log(error);
+        return { success: false, message: "Failed to send verification email" };
+      } else {
+        console.log("email sent: " + info.response);
+      }
+    });
 
-    sgMail
-      .send(mailBody)
-      .then((res) => console.log("email sent. res=> ", res))
-      .catch((error) => console.log("error sending email ", error));
+    // sgMail
+    //   .send(mailBody)
+    //   .then((res: NextResponse) => console.log("email sent. res=> ", res))
+    //   .catch((error) => console.log("error sending email ", error));
 
     return { success: true, message: "Verification email sent successfully" };
   } catch (emailError) {

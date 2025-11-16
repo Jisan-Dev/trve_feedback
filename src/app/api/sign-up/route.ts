@@ -1,5 +1,5 @@
-import dbConnect from "@/lib/dbConnect";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
+import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { hash } from "bcryptjs";
 
@@ -8,7 +8,10 @@ export async function POST(request: Request) {
   try {
     const { username, email, password } = await request.json();
 
-    const existingUserVerifiedByUsername = await UserModel.findOne({ username, isVerified: true });
+    const existingUserVerifiedByUsername = await UserModel.findOne({
+      username,
+      isVerified: true,
+    });
     if (existingUserVerifiedByUsername) {
       return Response.json(
         {
@@ -37,12 +40,14 @@ export async function POST(request: Request) {
         existingUserByEmail.password = hashedPass;
         existingUserByEmail.verifyCode = verifyCode;
         existingUserByEmail.verifyCodeExpiry = new Date(Date.now() + 3600000); //same as getHours() + 1
+        existingUserByEmail.username = username;
         await existingUserByEmail.save();
       }
     } else {
       const hashedPass = await hash(password, 10);
       const expiryDate = new Date();
-      expiryDate.setHours(expiryDate.getHours() + 1);
+      expiryDate.setMinutes(expiryDate.getMinutes() + 1);
+      // expiryDate.setHours(expiryDate.getHours() + 1);
 
       const newUser = new UserModel({
         username,
@@ -59,7 +64,12 @@ export async function POST(request: Request) {
     }
 
     const subject = "Verification Code from TrveFeedback";
-    const emailResponse = await sendVerificationEmail(email, username, verifyCode, subject);
+    const emailResponse = await sendVerificationEmail(
+      email,
+      existingUserByEmail ? existingUserByEmail.username : username,
+      verifyCode,
+      subject
+    );
     console.log("emailRes=> ", emailResponse);
 
     if (!emailResponse.success) {
@@ -75,7 +85,8 @@ export async function POST(request: Request) {
     return Response.json(
       {
         success: true,
-        message: "User registered and verification code sent to your email! Please verify now!",
+        message:
+          "User registered and verification code sent to your email! Please verify now!",
       },
       { status: 201 }
     );
