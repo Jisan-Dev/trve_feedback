@@ -1,144 +1,40 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import CTA from "@/components/message-sending-page/CTA";
+import GenerateMessages from "@/components/message-sending-page/GenerateMessages";
+import MessageSendingForm from "@/components/message-sending-page/MessageSendingForm";
 import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
 import { messageSchema } from "@/schemas/messageSchema";
-import { ApiResponse } from "@/types/ApiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios, { AxiosError } from "axios";
-import { Loader2, LoaderPinwheel } from "lucide-react";
-import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 export default function SendMessage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const { username } = useParams<{ username: string }>();
-  const { toast } = useToast();
-  const form = useForm<z.infer<typeof messageSchema>>({ resolver: zodResolver(messageSchema) });
+  const { username } = useParams();
 
-  const messageContent = form.watch("content");
+  const inputRef = useRef<HTMLHeadingElement>(null);
 
-  const handleMessageClick = (message: string) => {
-    form.setValue("content", message);
-  };
-
-  const onSubmit = async (data: z.infer<typeof messageSchema>) => {
-    setIsLoading(true);
-    try {
-      const response = await axios.post<ApiResponse>("/api/send-message", { ...data, username });
-      toast({
-        title: response.data.message,
-        variant: "default",
-      });
-      form.reset({ ...form.getValues(), content: "" });
-    } catch (error) {
-      const axiosError = error as AxiosError<ApiResponse>;
-      toast({ title: "Error", description: axiosError.response?.data?.message || "Failed to sent message", variant: "destructive" });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const [isSuggestLoading, setIsSuggestLoading] = useState(false);
-  const [generatedMsg, setGeneratedMsg] = useState("");
-  const fetchSuggestedMessages = async () => {
-    setIsSuggestLoading(true);
-    try {
-      const response = await axios.post<ApiResponse>("/api/suggest-messages");
-      setGeneratedMsg(response.data?.message);
-    } catch (error) {
-      console.error("Error fetching messages:", error);
-      const axiosError = error as AxiosError<ApiResponse>;
-      toast({ title: "Error", description: axiosError.response?.data?.message || "Something went wrong!", variant: "destructive" });
-    } finally {
-      setIsSuggestLoading(false);
-    }
-  };
-
-  const parseStringMessages = (messageString: string): string[] => {
-    return messageString.split("||");
-  };
+  const form = useForm<z.infer<typeof messageSchema>>({
+    resolver: zodResolver(messageSchema),
+  });
 
   return (
-    <>
-      <div className="container mx-auto my-8 p-3 rounded max-w-4xl">
-        <h1 className="text-4xl font-bold mb-6 text-center">
-          Send Anonymous Message to <br /> @{username}
-        </h1>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="content"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Write Message:</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Write your anonymous message here" className="resize-none" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex justify-center">
-              {isLoading ? (
-                <Button disabled>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Please wait
-                </Button>
-              ) : (
-                <Button type="submit" disabled={isLoading || !messageContent}>
-                  SEND IT !
-                </Button>
-              )}
-            </div>
-          </form>
-        </Form>
+    <div className="container mx-auto my-8 p-3 rounded max-w-4xl">
+      <h1 ref={inputRef} className="text-4xl font-bold mb-6 text-center">
+        Send Anonymous Message to <br /> @{username}
+      </h1>
 
-        <div className="space-y-4 my-8">
-          <div className="space-y-2">
-            <Button onClick={fetchSuggestedMessages} className="my-4" disabled={isSuggestLoading}>
-              Suggest Messages
-            </Button>
-            <p>Click on any message below to select it.</p>
-          </div>
-          <Card>
-            <CardHeader>
-              <h3 className="text-xl font-semibold">Messages</h3>
-            </CardHeader>
-            {isSuggestLoading ? (
-              <div className="w-full h-full flex items-center justify-center mb-2">
-                <LoaderPinwheel className="animate-spin" />
-              </div>
-            ) : (
-              <CardContent className="flex flex-col space-y-4">
-                {parseStringMessages(generatedMsg).map((message, index) => (
-                  <p
-                    key={index}
-                    className="mb-2 border cursor-pointer rounded-lg border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground px-4 py-2 text-center"
-                    onClick={() => handleMessageClick(message)}>
-                    {message}
-                  </p>
-                ))}
-              </CardContent>
-            )}
-          </Card>
-        </div>
-        <Separator className="my-8 mt-14" />
-        <div className="text-center">
-          <div className="mb-4">Get Your Message Board</div>
-          <Link href={"/sign-up"}>
-            <Button>Create Your Account</Button>
-          </Link>
-        </div>
-      </div>
-    </>
+      <MessageSendingForm form={form} />
+
+      <Separator className="my-8" />
+
+      <GenerateMessages form={form} inputRef={inputRef} />
+
+      <Separator className="my-8 mt-14" />
+
+      <CTA />
+    </div>
   );
 }

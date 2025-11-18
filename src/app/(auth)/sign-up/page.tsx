@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import * as z from "zod";
 
-const page = () => {
+export default function page() {
   const { toast } = useToast();
   const [username, setUsername] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -75,6 +75,4 @@ const page = () => {
       </div>
     </div>
   );
-};
-
-export default page;
+}
