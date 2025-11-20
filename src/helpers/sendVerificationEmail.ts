@@ -33,7 +33,7 @@ export async function sendVerificationEmail(
       from: {
         name: "True Feedback",
         // address: process.env.TRANSPORTER_EMAIL as string,
-        email: process.env.TRANSPORTER_EMAIL as string,
+        email: "istiakkashem35@gmail.com",
       },
       subject: subject,
       text: `Verification Code for ${username} is ${verifyCode}`,
