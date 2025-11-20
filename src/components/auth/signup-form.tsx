@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -115,6 +116,9 @@ const SignupForm = ({
               <FormControl>
                 <Input type="email" placeholder="email" {...field} />
               </FormControl>
+              <FormDescription>
+                A verification code will be sent to this email.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
