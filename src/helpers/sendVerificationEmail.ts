@@ -1,7 +1,6 @@
 import { ApiResponse } from "@/types/ApiResponse";
-import nodemailer from "nodemailer";
-// import sgMail from "@sendgrid/mail";
-// sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
+import sgMail from "@sendgrid/mail";
+sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 export async function sendVerificationEmail(
   email: string,
@@ -10,30 +9,31 @@ export async function sendVerificationEmail(
   subject: string
 ): Promise<ApiResponse> {
   try {
-    const transporter = nodemailer.createTransport({
-      service: "Gmail",
-      auth: {
-        user: process.env.TRANSPORTER_EMAIL,
-        pass: process.env.TRANSPORTER_PASS,
-      },
-    });
+    // const transporter = nodemailer.createTransport({
+    //   service: "Gmail",
+    //   auth: {
+    //     user: process.env.TRANSPORTER_EMAIL,
+    //     pass: process.env.TRANSPORTER_PASS,
+    //   },
+    // });
 
     // verify transporter
     // verify connection configuration
-    transporter.verify(function (error, success) {
-      if (error) {
-        console.log("error from verify email transporter => ", error);
-        return { success: false, message: "Failed to send verification email" };
-      } else {
-        console.log("Server is ready to take our messages");
-      }
-    });
+    // transporter.verify(function (error, success) {
+    //   if (error) {
+    //     console.log("error from verify email transporter => ", error);
+    //     return { success: false, message: "Failed to send verification email" };
+    //   } else {
+    //     console.log("Server is ready to take our messages");
+    //   }
+    // });
 
     const mailBody = {
       to: email, // receiver or list of [receivers]
       from: {
-        name: "Trve Feedback",
-        address: process.env.TRANSPORTER_EMAIL as string,
+        name: "True Feedback",
+        // address: process.env.TRANSPORTER_EMAIL as string,
+        email: process.env.TRANSPORTER_EMAIL as string,
       },
       subject: subject,
       text: `Verification Code for ${username} is ${verifyCode}`,
@@ -84,19 +84,19 @@ export async function sendVerificationEmail(
     };
 
     // send mail with defined transport object
-    transporter.sendMail(mailBody, (error, info) => {
-      if (error) {
-        console.log(error);
-        return { success: false, message: "Failed to send verification email" };
-      } else {
-        console.log("email sent: " + info.response);
-      }
-    });
+    // transporter.sendMail(mailBody, (error, info) => {
+    //   if (error) {
+    //     console.log(error);
+    //     return { success: false, message: "Failed to send verification email" };
+    //   } else {
+    //     console.log("email sent: " + info.response);
+    //   }
+    // });
 
-    // sgMail
-    //   .send(mailBody)
-    //   .then((res: NextResponse) => console.log("email sent. res=> ", res))
-    //   .catch((error) => console.log("error sending email ", error));
+    sgMail
+      .send(mailBody)
+      .then((res) => console.log("email sent. res=> ", res))
+      .catch((error) => console.log("error sending email ", error));
 
     return { success: true, message: "Verification email sent successfully" };
   } catch (emailError) {

@@ -10,7 +10,7 @@ import { acceptMessagesSchema } from "@/schemas/acceptMessagesSchema";
 import { ApiResponse } from "@/types/ApiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
-import { Loader2, LoaderPinwheel, RefreshCcw } from "lucide-react";
+import { Loader2, RefreshCcw } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -45,8 +45,14 @@ export default function Dashboard() {
     } catch (error) {
       console.error("Error while fetching acceptMessages status ", error);
       const axiosError = error as AxiosError<ApiResponse>;
-      const errorMessage = axiosError.response?.data.message || "Something went wrong while getting the message settings! Please try again";
-      toast({ title: "Error", description: errorMessage, variant: "destructive" });
+      const errorMessage =
+        axiosError.response?.data.message ||
+        "Something went wrong while getting the message settings! Please try again";
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
     } finally {
       setIsSwitchLoading(false);
     }
@@ -60,13 +66,22 @@ export default function Dashboard() {
         const response = await axios.get<ApiResponse>("/api/get-messages");
         setMessages(response.data?.messages || []);
         if (refresh) {
-          toast({ title: "Refreshed!", description: "Showing Latest Messages." });
+          toast({
+            title: "Refreshed!",
+            description: "Showing Latest Messages.",
+          });
         }
       } catch (error) {
         console.error("Error refreshing", error);
         const axiosError = error as AxiosError<ApiResponse>;
-        const errorMessage = axiosError.response?.data.message || "Something went wrong while getting the latest messages! Please try again";
-        toast({ title: "Error", description: errorMessage, variant: "destructive" });
+        const errorMessage =
+          axiosError.response?.data.message ||
+          "Something went wrong while getting the latest messages! Please try again";
+        toast({
+          title: "Error",
+          description: errorMessage,
+          variant: "destructive",
+        });
       } finally {
         setIsLoading(false);
       }
@@ -91,8 +106,15 @@ export default function Dashboard() {
     } catch (error: any) {
       console.error("Error while switching accept messages status ", error);
       const axiosError = error as AxiosError<ApiResponse>;
-      const errorMessage = axiosError.response?.data.message || error.message || "Error while switching accept messages status ";
-      toast({ title: "Error", description: errorMessage, variant: "destructive" });
+      const errorMessage =
+        axiosError.response?.data.message ||
+        error.message ||
+        "Error while switching accept messages status ";
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
     }
   };
 
@@ -103,7 +125,10 @@ export default function Dashboard() {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl);
-    toast({ title: "URL Copied", description: "Profile URL has been copied to clipboard." });
+    toast({
+      title: "URL Copied",
+      description: "Profile URL has been copied to clipboard.",
+    });
   };
 
   if (status == "loading")
@@ -125,14 +150,26 @@ export default function Dashboard() {
       <div className="mb-4">
         <h2 className="text-base font-semibold mb-3">Copy Your Unique Link</h2>{" "}
         <div className="flex items-center">
-          <input type="text" value={profileUrl} disabled className="input input-bordered w-full p-2 sm:pl-4 mr-2 rounded-lg" />
+          <input
+            type="text"
+            value={profileUrl}
+            disabled
+            className="input input-bordered w-full p-2 sm:pl-4 mr-2 rounded-lg"
+          />
           <Button onClick={copyToClipboard}>Copy</Button>
         </div>
       </div>
 
       <div className="mb-4 flex items-center">
-        <Switch {...register("acceptMessages")} checked={acceptMessages} onCheckedChange={handleSwitchChange} disabled={isSwitchLoading} />
-        <span className="ml-2">Accept Messages: {acceptMessages ? "On" : "Off"}</span>
+        <Switch
+          {...register("acceptMessages")}
+          checked={acceptMessages}
+          onCheckedChange={handleSwitchChange}
+          disabled={isSwitchLoading}
+        />
+        <span className="ml-2">
+          Accept Messages: {acceptMessages ? "On" : "Off"}
+        </span>
       </div>
       <Separator />
 
@@ -142,12 +179,23 @@ export default function Dashboard() {
         onClick={(e) => {
           e.preventDefault();
           fetchMessages(true);
-        }}>
-        {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCcw className="h-4 w-4" />}
+        }}
+      >
+        {isLoading ? (
+          <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          <RefreshCcw className="h-4 w-4" />
+        )}
       </Button>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
         {messages.length > 0 ? (
-          messages.map((message, index) => <MessageCard key={index} message={message} onMessageDelete={handleDeleteMessage} />)
+          messages.map((message, index) => (
+            <MessageCard
+              key={index}
+              message={message}
+              onMessageDelete={handleDeleteMessage}
+            />
+          ))
         ) : (
           <p>No messages to display.</p>
         )}
