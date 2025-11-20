@@ -46,8 +46,8 @@ export async function POST(request: Request) {
     } else {
       const hashedPass = await hash(password, 10);
       const expiryDate = new Date();
-      expiryDate.setMinutes(expiryDate.getMinutes() + 1);
-      // expiryDate.setHours(expiryDate.getHours() + 1);
+      // expiryDate.setMinutes(expiryDate.getMinutes() + 1);
+      expiryDate.setHours(expiryDate.getHours() + 1);
 
       const newUser = new UserModel({
         username,
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
       {
         success: true,
         message:
-          "User registered and verification code sent to your email! Please verify now!",
+          "User registered and verification code sent to your email! Please verify now, it will expire in 1 hour!",
       },
       { status: 201 }
     );
