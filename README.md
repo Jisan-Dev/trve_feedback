@@ -6,13 +6,9 @@ trveFeedback is a modern web application that enables users to receive **anonymo
 
 🚀 Perfect for **portfolio enhancement, peer reviews, social posting, and professional feedback collection**.
 
----
-
 ## 🔗 Live Demo
 
 👉 https://trve-feedback.vercel.app
-
----
 
 ## ✨ Features
 
@@ -26,8 +22,6 @@ trveFeedback is a modern web application that enables users to receive **anonymo
 | 🔎 Dashboard & Message Management  | Users can view and manage received messages securely                 |
 | 🌐 Fully Responsive UI             | Clean, minimal, and responsive design using Tailwind + Shadcn UI     |
 | 🚀 Production Deployment           | Optimized and deployed on Vercel with environment configs            |
-
----
 
 ## 🛠 Tech Stack
 
@@ -64,8 +58,6 @@ cd trve_feedback
 npm install
 npm run dev
 ```
-
----
 
 ## 🔐 Environment Variables
 
