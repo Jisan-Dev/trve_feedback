@@ -1,67 +1,126 @@
-# TrueFeedback
+# trveFeedback
 
-> **Honest Thoughts, Anonymously Delivered.**
+> **Where Truth Finds a Voice — Anonymous, Secure, AI-Powered Feedback**
 
-TrueFeedback is an anonymous messaging platform built with **Next.js**, where users can receive anonymous feedback via a personal URL. It also features an **AI-powered message suggestion system** using Gemini AI, making it easier for senders to craft thoughtful, meaningful messages.
+trveFeedback is a modern web application that enables users to receive **anonymous feedback through a personal shareable link**, helping them gain honest insights for personal growth, peer evaluation, or social engagement. Built with **Next.js**, it features **secure authentication, email verification, AI-powered message suggestions using Gemini AI**, and a responsive, user-friendly interface.
+
+🚀 Perfect for **portfolio enhancement, peer reviews, social posting, and professional feedback collection**.
 
 ---
 
-## 🚀 Live Demo
+## 🔗 Live Demo
 
-👉 [https://trve-feedback.vercel.app](https://trve-feedback.vercel.app)
+👉 https://trve-feedback.vercel.app
 
 ---
 
 ## ✨ Features
 
-- **Personalized Feedback URLs for Users**
-- **Anonymous Message Sending** — no sign-up required for senders
-- **AI-Powered Message Suggestions** with Gemini API
-- **Minimal, Secure, and Clean UI**
-- **Secure Authentication with Email Verification** powered by SendGrid
+| Feature                            | Description                                                          |
+| ---------------------------------- | -------------------------------------------------------------------- |
+| 🎯 Personalized Profile URL        | Each user gets a unique shareable link to collect anonymous messages |
+| 🔐 Email / Password Authentication | Secure login and signup using NextAuth                               |
+| 📨 OTP Email Verification          | SendGrid-powered OTP verification during signup                      |
+| 🤐 Anonymous Message Sending       | Anyone can send messages without creating an account                 |
+| 🤖 AI Message Suggestions          | Gemini AI helps generate thoughtful and creative feedback            |
+| 🔎 Dashboard & Message Management  | Users can view and manage received messages securely                 |
+| 🌐 Fully Responsive UI             | Clean, minimal, and responsive design using Tailwind + Shadcn UI     |
+| 🚀 Production Deployment           | Optimized and deployed on Vercel with environment configs            |
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Next.js**
-- **Tailwind CSS**
-- **Shadcn**
-- **MongoDB**
-- **React Hook Form**
-- **Zod**
-- **SendGrid**
-- **Gemini AI API**
+### Frontend & Styling
+
+- Next.js
+- TypeScript
+- Tailwind CSS
+- Shadcn UI
+
+### Backend & Services
+
+- MongoDB
+- NextAuth
+- SendGrid (Email OTP)
+- Gemini AI API
+- JWT
+
+### Libraries & Tools
+
+- React Hook Form
+- Zod
+- Vercel Deployment
 
 ---
 
-## 📦 Installation
+## 🚀 Installation & Setup
 
-Clone the repository and install dependencies:
+Clone the repository:
 
 ```bash
-git clone https://github.com/Jisan-Dev/trve_feedback
-cd trveFeedback
+git clone https://github.com/Jisan-Dev/trve_feedback.git
+cd trve_feedback
 npm install
 npm run dev
 ```
 
-## 🛑 Environment Variables
+---
 
-```js
-MONGO_URI = your_mongodb_connection_string;
-RESEND_API_KEY = your_resend_api_key;
-NEXTAUTH_SECRET = your_nextauth_secret;
-TRANSPORTER_PASS = your_email_transporter_password;
-TRANSPORTER_EMAIL = your_email_address;
-GEMINI_API_KEY = your_gemini_api_key;
-SENDGRID_API_KEY = your_sendgrid_api_key;
+## 🔐 Environment Variables
+
+Create a `.env.local` file in the root directory and configure the following:
+
+```bash
+MONGO_URI="your_mongodb_connection_string"
+NEXTAUTH_SECRET="your_nextauth_secret"
+GEMINI_API_KEY="your_gemini_api_key"
+SENDGRID_API_KEY="your_sendgrid_api_key"
+NEXT_PUBLIC_BASE_URL="https://trve-feedback.vercel.app"
 ```
 
-## How to use the app?
+> **💡 Note:** For local development, use `http://localhost:3000` as `NEXT_PUBLIC_BASE_URL`.
 
-- First sign up with a unique user name, email and password.
-- You'll get a verification otp in your email to securely complete the signup process.
-- You'll see a dashboard where you'll have unique URL which you can copy and share to your any groups or friends,
-- Senders will click the URL and get to see options to send you the message. There they'll be able to get the help of Ai in generating random messages.
-- After that in your homepage you'll be able to see the messages you received from them but their infos will remain anonymous.
+---
+
+## 📘 User Flow
+
+1️⃣ Sign up using email, password, and unique username \
+2️⃣ Verify account using OTP sent via email (SendGrid) \
+3️⃣ Access dashboard with your unique shareable feedback link \
+4️⃣ Share the link on Instagram, WhatsApp, Facebook, or anywhere \
+5️⃣ Senders submit anonymous messages (optionally using AI suggestions) \
+6️⃣ Messages appear instantly in your private dashboard
+
+---
+
+## 💡 What I Learned
+
+This project helped me enhance my understanding of:
+
+✔ Full-stack development with Next.js & MongoDB\
+✔ Secure authentication and OTP email verification\
+✔ Working with AI APIs (Gemini AI)\
+✔ Form validation using React Hook Form & Zod\
+✔ Deployment, CI/CD, and environment configuration on Vercel\
+✔ API handling, session management, and UI optimization
+
+---
+
+## 💼 Why This Project Matters
+
+✔ Real-world application solving a genuine problem
+✔ Showcases full-stack engineering using production tools
+✔ Includes authentication, AI integration, email automation, and database management
+✔ Fully deployed and optimized for scalability
+
+---
+
+## 📬 Contact
+
+Istiak Kashem Jisan\
+📧 istiakkashemjisan@gmail.com
+
+💼 Portfolio: https://istiakjisan.vercel.app/
+
+⭐ If you found this project interesting, consider giving it a star on GitHub!
