@@ -9,30 +9,10 @@ export async function sendVerificationEmail(
   subject: string,
 ): Promise<ApiResponse> {
   try {
-    // const transporter = nodemailer.createTransport({
-    //   service: "Gmail",
-    //   auth: {
-    //     user: process.env.TRANSPORTER_EMAIL,
-    //     pass: process.env.TRANSPORTER_PASS,
-    //   },
-    // });
-
-    // verify transporter
-    // verify connection configuration
-    // transporter.verify(function (error, success) {
-    //   if (error) {
-    //     console.log("error from verify email transporter => ", error);
-    //     return { success: false, message: "Failed to send verification email" };
-    //   } else {
-    //     console.log("Server is ready to take our messages");
-    //   }
-    // });
-
     const mailBody = {
       to: email, // receiver or list of [receivers]
       from: {
         name: "True Feedback",
-        // address: process.env.TRANSPORTER_EMAIL as string,
         email: "istiakjisan696@gmail.com",
       },
       subject: subject,
@@ -82,16 +62,6 @@ export async function sendVerificationEmail(
       </html>
       `,
     };
-
-    // send mail with defined transport object
-    // transporter.sendMail(mailBody, (error, info) => {
-    //   if (error) {
-    //     console.log(error);
-    //     return { success: false, message: "Failed to send verification email" };
-    //   } else {
-    //     console.log("email sent: " + info.response);
-    //   }
-    // });
 
     sgMail
       .send(mailBody)
