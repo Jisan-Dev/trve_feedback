@@ -86,7 +86,7 @@ export default function Dashboard() {
         setIsLoading(false);
       }
     },
-    [setIsLoading, setMessages]
+    [setIsLoading, setMessages],
   );
 
   useEffect(() => {
@@ -148,8 +148,11 @@ export default function Dashboard() {
       <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
 
       <div className="mb-4">
-        <h2 className="text-base font-semibold mb-3">Copy Your Unique Link</h2>{" "}
-        <div className="flex items-center">
+        <h2 className="text-base font-semibold ">Copy Your Unique Link</h2>
+        <span className="text-xs italic">
+          (you can share this link with your friends/community)
+        </span>
+        <div className="flex items-center mt-4">
           <input
             type="text"
             value={profileUrl}
@@ -167,9 +170,7 @@ export default function Dashboard() {
           onCheckedChange={handleSwitchChange}
           disabled={isSwitchLoading}
         />
-        <span className="ml-2">
-          Accept Messages: {acceptMessages ? "On" : "Off"}
-        </span>
+        <span className="ml-2">Accept Messages: {acceptMessages ? "On" : "Off"}</span>
       </div>
       <Separator />
 
@@ -190,11 +191,7 @@ export default function Dashboard() {
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
         {messages.length > 0 ? (
           messages.map((message, index) => (
-            <MessageCard
-              key={index}
-              message={message}
-              onMessageDelete={handleDeleteMessage}
-            />
+            <MessageCard key={index} message={message} onMessageDelete={handleDeleteMessage} />
           ))
         ) : (
           <p>No messages to display.</p>
