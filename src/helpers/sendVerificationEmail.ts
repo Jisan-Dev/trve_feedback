@@ -6,7 +6,7 @@ export async function sendVerificationEmail(
   email: string,
   username: string,
   verifyCode: string,
-  subject: string
+  subject: string,
 ): Promise<ApiResponse> {
   try {
     // const transporter = nodemailer.createTransport({
@@ -33,7 +33,7 @@ export async function sendVerificationEmail(
       from: {
         name: "True Feedback",
         // address: process.env.TRANSPORTER_EMAIL as string,
-        email: "istiakkashem35@gmail.com",
+        email: "istiakjisan696@gmail.com",
       },
       subject: subject,
       text: `Verification Code for ${username} is ${verifyCode}`,
