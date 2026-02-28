@@ -111,8 +111,8 @@ This project helped me enhance my understanding of:
 ## 📬 Contact
 
 Istiak Kashem Jisan\
-📧 istiakkashemjisan@gmail.com
+📧 istiakkashem35@gmail.com
 
-💼 Portfolio: https://istiakjisan.vercel.app/
+💼 Portfolio: https://jisan-swe.vercel.app
 
 ⭐ If you found this project interesting, consider giving it a star on GitHub!
