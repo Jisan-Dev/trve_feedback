@@ -1,7 +1,7 @@
 import { ApiResponse } from "@/types/ApiResponse";
 import emailjs from "@emailjs/browser";
 
-emailjs.init(process.env.EMAILJS_PUBLIC_KEY || "");
+emailjs.init({ publicKey: process.env.EMAILJS_PUBLIC_KEY || "" });
 
 export async function sendVerificationEmail(
   email: string,
