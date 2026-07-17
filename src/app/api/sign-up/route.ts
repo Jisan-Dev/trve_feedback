@@ -18,7 +18,7 @@ export async function POST(request: Request) {
           success: false,
           message: "Username already taken and verified",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
             success: false,
             message: "This Email is already registered and verified",
           },
-          { status: 400 }
+          { status: 400 },
         );
       } else {
         const hashedPass = await hash(password, 10);
@@ -68,7 +68,6 @@ export async function POST(request: Request) {
       email,
       existingUserByEmail ? existingUserByEmail.username : username,
       verifyCode,
-      subject
     );
     console.log("emailRes=> ", emailResponse);
 
@@ -78,7 +77,7 @@ export async function POST(request: Request) {
           success: false,
           message: emailResponse?.message,
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -88,7 +87,7 @@ export async function POST(request: Request) {
         message:
           "User registered and verification code sent to your email! Please verify now, it will expire in 1 hour!",
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Error registering user", error);
@@ -97,7 +96,7 @@ export async function POST(request: Request) {
         success: false,
         message: "Error registering user",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
