@@ -1,3 +1,5 @@
+"use client";
+
 import { signInSchema } from "@/schemas/signInSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -55,6 +57,19 @@ const SigninForm = ({
           ) : (
             "Sign In"
           )}
+        </Button>
+        <Button
+          variant="outline"
+          className="w-full"
+          type="submit"
+          disabled={isSubmitting}
+          onClick={(e) => {
+            e.preventDefault();
+            form.setValue("identifier", "ranofig816");
+            form.setValue("password", "password");
+          }}
+        >
+          Demo Login
         </Button>
       </form>
     </Form>
