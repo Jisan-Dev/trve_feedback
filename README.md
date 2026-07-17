@@ -10,6 +10,10 @@ trveFeedback is a modern web application that enables users to receive **anonymo
 
 👉 https://trve-feedback.vercel.app
 
+> _Demo credentials_ \
+> **username**: ranofig816 \
+> **password**: password
+
 ## ✨ Features
 
 | Feature                            | Description                                                          |
